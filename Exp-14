@@ -1,84 +1,83 @@
-#Query
-UPDATE EMPLOYEES
-SET Salary = Salary + 500
-WHERE Department_id = 10;
-
-COMMIT;
-
-#Query
-UPDATE EMPLOYEES
-SET Salary = Salary - 500
-WHERE Department_id = 10;
-
-ROLLBACK;
+#-- Query 1
+use mydatabase;
 
 
-#Query
-UPDATE EMPLOYEES SET Salary = Salary + 100 WHERE Employee_id = 101;
-SAVEPOINT sp1;
 
-UPDATE EMPLOYEES SET Salary = Salary + 200 WHERE Employee_id = 102;
-SAVEPOINT sp2;
-
-ROLLBACK TO sp1; -- Undoes changes after sp1 but keeps changes before it
-COMMIT;
+-- Query 2
+show dbs;
 
 
-#Query
-CREATE TABLE test_txn (
-  id NUMBER,
-  name VARCHAR2(20)
+
+-- Query 3
+use studentdb;
+
+
+
+-- Query 4
+db.posts.createCollection("posts");
+
+
+
+-- Query 5
+db.posts.insertOne({
+  title: "Post Title 1",
+  body: "Body of post.",
+  category: "News",
+  likes: 1,
+  tags: ["news","events"],
+  date: Date()
+});
+
+
+
+-- Query 6
+db.posts.insertMany([
+  { title: "Post 2", likes: 10 },
+  { title: "Post 3", likes: 5 }
+]);
+
+
+
+-- Query 7
+db.posts.find();
+
+
+
+-- Query 8
+db.posts.find().pretty();
+
+
+
+-- Query 9
+db.posts.find({ category: "News" });
+
+
+
+-- Query 10
+db.posts.updateOne(
+  { title: "Post Title 1" },
+  { $set: { likes: 20 } }
 );
--- This CREATE statement is auto-committed
-
-
-#Query
-SELECT * FROM EMPLOYEES
-WHERE Department_id = 10
-FOR UPDATE;
-
-
-#Query
-SELECT * FROM EMPLOYEES
-WHERE Department_id = 10
-FOR UPDATE NOWAIT;
-
-
-#Query
-BEGIN
-  UPDATE EMPLOYEES SET Salary = Salary + 100 WHERE Employee_id = 101;
-  SAVEPOINT before_bonus;
-
-  UPDATE EMPLOYEES SET Salary = Salary + 500 WHERE Employee_id = 102;
-
-  ROLLBACK TO before_bonus;
-
-  COMMIT;
-END;
 
 
 
+-- Query 11
+db.posts.deleteOne({ title: "Post 3" });
 
 
 
+-- Query 12
+db.posts.countDocuments();
 
 
 
+-- Query 13
+db.posts.find().sort({ likes: 1 });
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+-- Query 14
+db.posts.find().sort({ likes: -1 });
 
 
 
